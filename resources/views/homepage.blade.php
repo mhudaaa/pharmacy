@@ -39,31 +39,31 @@
 						<td><img src="{{ URL::asset('assets/img/paracetamol.png') }}"></td>
 						<td>Paracetamol</td>
 						<td><h4>$5</h4></td>
-						<td><div class="stock">35</div></td>
+						<td><div class="stock">{{ rand(20,70) }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/neuralgin.png') }}"></td>
 						<td>Neuralgin</td>
 						<td><h4>$3</h4></td>
-						<td><div class="stock">12</div></td>
+						<td><div class="stock">{{ rand(20,70) }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/antalgin.png') }}"></td>
 						<td>Antalgin</td>
 						<td><h4>$11</h4></td>
-						<td><div class="stock">80</div></td>
+						<td><div class="stock">{{ rand(20,70) }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/bodrex.png') }}"></td>
 						<td>Bodrex</td>
 						<td><h4>$8</h4></td>
-						<td><div class="stock">71</div></td>
+						<td><div class="stock">{{ rand(20,70) }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/Komix.png') }}"></td>
 						<td>Komix</td>
 						<td><h4>$7</h4></td>
-						<td><div class="stock">33</div></td>
+						<td><div class="stock">{{ rand(20,70) }}</div></td>
 					</tr>
 				</table>
 			</div>

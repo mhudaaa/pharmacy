@@ -10,7 +10,7 @@
 				<a href="/name">
 					<button class="btn bg-green btn-block glow-green">Start Game</button>
 				</a>
-				<small class="text-grey">About this game</small>
+				<small class="text-grey">Leader board</small>
 			</div>
 		</div>
 	</div>

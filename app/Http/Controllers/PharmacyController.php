@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Model\Permintaan;
+use App\Model\Forecast;
+use App\Model\Medicine;
+use App\Model\Order;
+use App\Model\Player;
+use App\Model\Stock;
 
 class PharmacyController extends Controller{
 
@@ -15,25 +19,29 @@ class PharmacyController extends Controller{
     }
 
     public function orders(){
-        return view('orders');
-    }
-
-    public function checkout(){
-        return view('checkout');
+        $paracetamol    = Forecast::where('id_medicine', '=', '1')->get();
+        $neuralgin      = Forecast::where('id_medicine', '=', '2')->get();
+        $antalgin       = Forecast::where('id_medicine', '=', '3')->get();
+        $bodrex         = Forecast::where('id_medicine', '=', '4')->get();
+        $komix          = Forecast::where('id_medicine', '=', '5')->get();
+        return view('orders', compact('paracetamol', 'antalgin', 'bodrex', 'neuralgin', 'komix'));
     }
 
     public function gameover(){
         return view('game-over');
     }
+
+
+
     
     public function start(){
         $metodeAwal = rand(1, 3);
 
-        $paracetamol    = Permintaan::where('id_obat', '=', '1')->get();
-        $antalgin       = Permintaan::where('id_obat', '=', '2')->get();
-        $bodrex         = Permintaan::where('id_obat', '=', '3')->get();
-        $diapet         = Permintaan::where('id_obat', '=', '4')->get();
-        $komix          = Permintaan::where('id_obat', '=', '5')->get();
+        $paracetamol    = Permintaan::where('id_medicine', '=', '1')->get();
+        $antalgin       = Permintaan::where('id_medicine', '=', '2')->get();
+        $bodrex         = Permintaan::where('id_medicine', '=', '3')->get();
+        $diapet         = Permintaan::where('id_medicine', '=', '4')->get();
+        $komix          = Permintaan::where('id_medicine', '=', '5')->get();
         
         return view('orders', compact('metodeAwal', 'paracetamol', 'antalgin', 'bodrex', 'diapet', 'komix'));
     }
@@ -46,7 +54,7 @@ class PharmacyController extends Controller{
         $i=0;
         While ($i<= 4){
             $permintaan = new Permintaan();
-            $permintaan->id_obat = $i+1;
+            $permintaan->id_medicine = $i+1;
             $permintaan->jumlah = $jmlObat[$i];
             $permintaan->save();
             $i++;

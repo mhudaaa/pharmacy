@@ -378,7 +378,10 @@ input:focus{
 .no-padding-left{
 	padding-left:5px!important;
 }
-
+.no-padding-side{
+	padding-left: 0!important;
+	padding-right: 0!important;
+}
 .checkout{
 	margin: 30px auto 20px;
 }
@@ -396,8 +399,36 @@ input:focus{
 	border-right: 1px solid #DDF1FF;
 }
 .checkout td img{
-	height: 40px;
-	margin-right: 15px
+	height: 20px;
+}
+.checkout input{
+	background-color: rgba(133, 199, 244, .1);
+	text-align: center;
+	border-bottom: 0;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+/*Choose Avatar*/
+.avatar img{
+	width: 180px;
+	display: block;
+	margin:0 auto;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none!important
+}
+.carousel-control.left img{
+	margin-left: -12px;
+}
+.carousel-control.right img{
+	margin-right: -12px;
+}
+.carousel-control img{
+	width: 20px;
+	margin-top: 80px;
+
 }
 
 

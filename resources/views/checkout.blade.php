@@ -24,7 +24,14 @@
 					<table class="checkout"> 
 						<tr>
 							<td>
-								<h5><img src="{{ URL::asset('assets/img/c-paracetamol@2x.png') }}"> 24</h5>
+								<tr>
+									<td>
+										<img src="{{ URL::asset('assets/img/c-paracetamol@2x.png') }}">
+									</td>
+									<tr>
+										<input type="number" name="" value="24">	
+									</tr>
+								</tr>
 							</td>
 							<td>
 								<h5><img src="{{ URL::asset('assets/img/c-antalgin@2x.png') }}"> 12</h5>

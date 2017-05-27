@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-xs-10 col-xs-offset-1">
 					<div class="col-xs-3">
-						<a href="/name"><img class="icon-left" src="{{ URL::asset('assets/img/icon-back.png') }}"></a>
+						<a href="/name"><img class="icon icon-left" src="{{ URL::asset('assets/img/icon-back.png') }}"></a>
 					</div>
 					<div class="col-xs-6 text-center title">
 						Choose Avatar
@@ -17,6 +17,7 @@
 		<div class="row text-center">
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="lg-divider"></div>
+				{{ Session::get('name') }}
 				<div id="myCarousel" class="carousel slide avatar" data-interval="false" data-ride="carousel">
 
 					<!-- Wrapper for slides -->

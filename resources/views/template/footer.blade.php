@@ -15,13 +15,17 @@
 
   		$( document ).ready(function() {
 	  		$( ".order" ).click(function() {
-			  $( this ).fadeOut( "slow" );
+			  $( this ).fadeOut( "fast" );
 			});
 
 			$( ".checkout-btn" ).click(function() {
 			  	$( ".order-wrap" ).fadeOut( 500 );
 			  	$( ".checkout-wrap" ).fadeIn( 100 );
 			});
+
+			$(".row-link").click(function() {
+		        window.location = $(this).data("href");
+		    });
 		});
 
   		// Back one page before
@@ -40,8 +44,9 @@
 		// 	window.location = newLocation;
 		// }
 
-		// Timer
   	</script>
+  	
+	<!-- Timer -->
   	<script type="text/javascript">
   		$( document ).ready(function() {
 	  		timer = new Countdown();

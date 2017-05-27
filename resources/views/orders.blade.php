@@ -1,4 +1,12 @@
 @include('template/header')
+
+<?php
+	$getPar = floor(($paracetamol[0]->forecast + 10) / 7);
+	$getNeu = floor(($neuralgin[0]->forecast + 10) / 7);
+	$getAnt = floor(($antalgin[0]->forecast + 10) / 7);
+	$getBod = floor(($bodrex[0]->forecast + 10) / 7);
+	$getKom = floor(($komix[0]->forecast + 10) / 7);
+?>
 <body class="bg-blue">
 	<div id="wrapper" class="bg-blue order-wrap" canvas="container">
 		<div class="header">
@@ -27,13 +35,10 @@
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="row">
 					<div class="col-xs-4">
-						<h6>Week : 1</h6>
+						<h6>Week : {{ $week }}</h6>
 					</div>
 					<div class="col-xs-4 text-center">
 						<h3 class="time" id="timer">-</h3>
-					</div>
-					<div class="col-xs-4 text-right">
-						<h6>Day : 1</h6>
 					</div>
 				</div>
 			</div>
@@ -47,39 +52,50 @@
 		    	@for($i = 1; $i < 8; $i++)
 
 			    	<div class="item{{{ $isFirst ? ' active' : '' }}}">
+			    		<div class="day">DAY {{ $i }}</div>
 			      		<div class="row">
 							<div class="col-xs-10 col-xs-offset-1">
 								<div class="row text-center">
 									<div class="col-xs-4">
 										<div class="order">
-											<img class="icon-order" src="{{ URL::asset('assets/img/order-paracetamol@2x.png') }}">
-											<h6 class="qty">{{ floor(($paracetamol[0]->forecast + 10) / 7) }}</h6>
+											<button class="img-product" value="{{ $getPar }}" onClick="getPar(this.value)">
+												<img class="icon-order" src="{{ URL::asset('assets/img/order-paracetamol@2x.png') }}">
+												<h6 class="qty">{{ $getPar }}</h6>
+											</button>
 										</div>
 									</div>
 									<div class="col-xs-4">
 										<div class="order">
-											<img class="icon-order" src="{{ URL::asset('assets/img/order-neuralgin@2x.png') }}">
-											<h6 class="qty">{{ floor(($neuralgin[0]->forecast + 10) / 7) }}</h6>
+											<button class="img-product" value="{{ $getNeu }}" onClick="getNeu(this.value)">
+												<img class="icon-order" src="{{ URL::asset('assets/img/order-neuralgin@2x.png') }}">
+												<h6 class="qty">{{ $getNeu }}</h6>
+											</button>
 										</div>
 									</div>
 									<div class="col-xs-4">
 										<div class="order">
-											<img class="icon-order" src="{{ URL::asset('assets/img/order-antalgin@2x.png') }}">
-											<h6 class="qty">{{ floor(($antalgin[0]->forecast + 10) / 7) }}</h6>
+											<button class="img-product" value="{{ $getAnt }}" onClick="getAnt(this.value)">
+												<img class="icon-order" src="{{ URL::asset('assets/img/order-antalgin@2x.png') }}">
+												<h6 class="qty">{{ $getAnt }}</h6>
+											</button>
 										</div>
 									</div>
 								</div>
 								<div class="row text-center">
 									<div class="col-xs-4 col-xs-offset-2">
 										<div class="order">
-											<img class="icon-order" src="{{ URL::asset('assets/img/order-bodrexin@2x.png') }}">
-											<h6 class="qty">{{ floor(($bodrex[0]->forecast + 10) / 7) }}</h6>
+											<button class="img-product" value="{{ $getBod }}" onClick="getBod(this.value)">
+												<img class="icon-order" src="{{ URL::asset('assets/img/order-bodrexin@2x.png') }}">
+												<h6 class="qty">{{ $getBod }}</h6>
+											</button>
 										</div>
 									</div>
 									<div class="col-xs-4">
 										<div class="order">
-											<img class="icon-order" src="{{ URL::asset('assets/img/order-komix@2x.png') }}">
-											<h6 class="qty">{{ floor(($komix[0]->forecast + 10) / 7) }}</h6>
+											<button class="img-product" value="{{ $getKom }}" onClick="getKom(this.value)">
+												<img class="icon-order" src="{{ URL::asset('assets/img/order-komix@2x.png') }}">
+												<h6 class="qty">{{ $getKom }}</h6>
+											</button>
 										</div>
 									</div>
 								</div>
@@ -94,58 +110,13 @@
 					  	</div>
 					  	@else
 					  	<div class="text-center">
-						    <button class="btn checkout-btn bg-green glow-green">Checkout</button>
+						    <button class="btn checkout-btn bg-green glow-green" onClick="checkout()">Checkout</button>
 					  	</div>
 					  	@endif
-
-					  	{{ $i }}
 			    	</div>
 
 
 			    	<? $isFirst = false ?>
-		    	<!-- <div class="item">
-		      		<div class="row">
-						<div class="col-xs-10 col-xs-offset-1">
-							<div class="row text-center">
-								<div class="col-xs-4">
-									<div class="order">
-										<img class="icon-order" src="{{ URL::asset('assets/img/order-paracetamol@2x.png') }}">
-										<h6 class="qty">22</h6>
-									</div>
-								</div>
-								<div class="col-xs-4">
-									<div class="order">
-										<img class="icon-order" src="{{ URL::asset('assets/img/order-neuralgin@2x.png') }}">
-										<h6 class="qty">1</h6>
-									</div>
-								</div>
-								<div class="col-xs-4">
-									<div class="order">
-										<img class="icon-order" src="{{ URL::asset('assets/img/order-antalgin@2x.png') }}">
-										<h6 class="qty">15</h6>
-									</div>
-								</div>
-							</div>
-							<div class="row text-center">
-								<div class="col-xs-4 col-xs-offset-2">
-									<div class="order">
-										<img class="icon-order" src="{{ URL::asset('assets/img/order-bodrexin@2x.png') }}">
-										<h6 class="qty">9</h6>
-									</div>
-								</div>
-								<div class="col-xs-4">
-									<div class="order">
-										<img class="icon-order" src="{{ URL::asset('assets/img/order-komix@2x.png') }}">
-										<h6 class="qty">7</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="text-center">
-					    <button class="btn checkout-btn bg-white text-blue glow-black">Checkout</button>
-				  	</div>
-		    	</div> -->
 		    	@endfor
 		  	</div>
 		</div>
@@ -176,71 +147,73 @@
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="card card-lg glow-black text-blue">
 					<h4 id="timer-2" class="text-center">-</h4>
-					<table class="checkout"> 
-						<tr>
-							<td>
-								<div class="row">
-									<div class="col-xs-5 no-padding-side text-center">
-										<img src="{{ URL::asset('assets/img/paracetamol.png') }}">
+					<form method="post" type="submit" action="/orders/set">
+						{{ csrf_field() }}
+						<input type="hidden" name="id_player" value="1">
+						<input type="hidden" name="week" value="6">
+						<table class="checkout"> 
+							<tr>
+								<td>
+									<div class="row">
+										<div class="col-xs-5 no-padding-side text-center">
+											<img src="{{ URL::asset('assets/img/paracetamol.png') }}">
+										</div>
+										<div class="col-xs-7 no-padding-left">
+											<span id="qtyPar"></span>
+										</div>
 									</div>
-									<div class="col-xs-7 no-padding-left">
-										<input type="number" name="" value="24">	
+								</td>
+								<td>
+									<div class="row">
+										<div class="col-xs-5 no-padding-side text-center">
+											<img src="{{ URL::asset('assets/img/antalgin.png') }}">
+										</div>
+										<div class="col-xs-7 no-padding-left">
+											<span id="qtyNeu"></span>	
+										</div>
 									</div>
-								</div>
-							</td>
-							<td>
-								<div class="row">
-									<div class="col-xs-5 no-padding-side text-center">
-										<img src="{{ URL::asset('assets/img/antalgin.png') }}">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row">
+										<div class="col-xs-5 no-padding-side text-center">
+											<img src="{{ URL::asset('assets/img/neuralgin.png') }}">
+										</div>
+										<div class="col-xs-7 no-padding-left">
+											<span id="qtyAnt"></span>	
+										</div>
 									</div>
-									<div class="col-xs-7 no-padding-left">
-										<input type="number" name="" value="12">	
+								</td>
+								<td>
+									<div class="row">
+										<div class="col-xs-5 no-padding-side text-center">
+											<img src="{{ URL::asset('assets/img/bodrex.png') }}">
+										</div>
+										<div class="col-xs-7 no-padding-left">
+											<span id="qtyBod"></span>
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="row">
-									<div class="col-xs-5 no-padding-side text-center">
-										<img src="{{ URL::asset('assets/img/neuralgin.png') }}">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row">
+										<div class="col-xs-5 no-padding-side text-center">
+											<img src="{{ URL::asset('assets/img/komix.png') }}">
+										</div>
+										<div class="col-xs-7 no-padding-left">
+											<span id="qtyKom"></span>
+										</div>
 									</div>
-									<div class="col-xs-7 no-padding-left">
-										<input type="number" name="" value="35">	
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="row">
-									<div class="col-xs-5 no-padding-side text-center">
-										<img src="{{ URL::asset('assets/img/bodrex.png') }}">
-									</div>
-									<div class="col-xs-7 no-padding-left">
-										<input type="number" name="" value="22">	
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="row">
-									<div class="col-xs-5 no-padding-side text-center">
-										<img src="{{ URL::asset('assets/img/komix.png') }}">
-									</div>
-									<div class="col-xs-7 no-padding-left">
-										<input type="number" name="" value="19">	
-									</div>
-								</div>
-							</td>
-						</tr>
-					</table>
+								</td>
+							</tr>
+						</table>
 
-
-					<div class="text-center">
-						<a href="">
-							<button class="btn bg-blue glow-blue">Sell</button>
-						</a>
-					</div>
+						<div class="text-center">
+							<button type="submit" class="btn bg-blue glow-blue">Sell</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -270,4 +243,5 @@
 	</script> -->
 
 	@include('template/sidebar')
+@include('template/footer-order')
 @include('template/footer')

@@ -14,9 +14,14 @@
 Route::get('/', function () {
     return view('splash');
 });
+
+// Name
 Route::get('/name', function () {
     return view('add-name');
 });
+Route::post('/name/set', 'PharmacyController@setName');
+
+
 Route::get('/avatar', function () {
     return view('choose-avatar');
 });
@@ -25,7 +30,15 @@ Route::get('/spin', function () {
 });
 Route::get('/play', 'PharmacyController@play');
 Route::get('/home', 'PharmacyController@home');
+
+// Order
 Route::get('/orders', 'PharmacyController@orders');
+Route::post('/orders/set', 'PharmacyController@setOrder');
+
+// Restock
+Route::get('/forecast', 'PharmacyController@forecast');
+
+
 Route::get('/checkout', 'PharmacyController@checkout');
 Route::get('/game-over', 'PharmacyController@gameover');
 

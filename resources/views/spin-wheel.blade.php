@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-xs-10 col-xs-offset-1">
 					<div class="col-xs-3">
-						<a href="/avatar"><img class="icon-left" src="{{ URL::asset('assets/img/icon-back.png') }}"></a>
+						<a href="/avatar"><img class="icon icon-left" src="{{ URL::asset('assets/img/icon-back.png') }}"></a>
 					</div>
 					<div class="col-xs-6 text-center title">
 						Get Money

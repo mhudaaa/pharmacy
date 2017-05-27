@@ -171,7 +171,9 @@ small{
 .bold{
 	font-weight: 700!important;
 }
-
+.bolder{
+	font-weight: 800!important;
+}
 .btn{
 	letter-spacing: 1.2px;
 	height: auto!important;
@@ -186,6 +188,9 @@ small{
 	-moz-transition: background 0.3s ease;
 	-webkit-transition: background 0.3s ease;
 	-o-transition: background 0.3s ease;
+}
+.btn.btn-xs{
+	padding: 5px 10px!important;
 }
 .btn:focus{
 	outline: none!important;
@@ -231,6 +236,9 @@ small{
 }
 .text-blue{
 	color: #85C7F4!important;
+}
+.soft{
+	opacity: .8;
 }
 
 /*Text shadow*/
@@ -288,7 +296,7 @@ small{
 .icon-right{
 	margin-right: -26px;
 }
-.icon-link{
+.icon-link, .row-link{
 	cursor: pointer;
 }
 
@@ -315,6 +323,14 @@ small{
 	width: 15px;
 	margin-left: -7.5px;
 	font-size: 14px!important;
+}
+.order button.img-product{
+	background-color: transparent;
+	border: none;
+	padding: 0!important
+}
+.order button.img-product:focus{
+	outline: none;
 }
 
 .badge{
@@ -344,8 +360,12 @@ small{
 	margin-bottom: 30px;
 }
 
+.separator{
+	margin: 0 10px;
+}
+
 table{
-	width: 100%;
+	width: 100%!important;
 }
 table th{
 	color: #44ED8C;
@@ -371,6 +391,17 @@ input:focus{
 	transition: border-color 0.25s ease;
 }
 
+/*Restock table*/
+table.restock-table th{
+	text-align: center;
+}
+table.restock-table td{
+	color: #bbb;
+	text-align: center;
+}
+table.restock-table h4{
+	margin: 0 auto;
+}
 
 .no-padding-right{
 	padding-right:5px!important;
@@ -458,6 +489,19 @@ input:focus{
 	display: block;
 	margin-top: 5px;
 	margin-bottom: 10px;
+}
+
+.day{
+	width: 320px;
+	position: absolute;
+	left: 50%;
+	top: 40px;
+	margin-left: -160px;
+	font-weight: 900;
+	font-size: 100px;
+	color: rgba(255,255,255,.15);
+	text-align: center;
+	font-family: 'Montserrat';
 }
 
 [canvas=container],

@@ -51,11 +51,11 @@
 			) {
 			swal("", "Not enough stock", "error");
 		} else if(
-			paracetamol < ceil(({{ $stocks[0]->paracetamol }} / 2)) ||
-			neuralgin < ceil(({{ $stocks[0]->neuralgin }} / 2)) ||
-			antalgin < ceil(({{ $stocks[0]->antalgin }} / 2)) ||
-			bodrex < ceil(({{ $stocks[0]->bodrex }} / 2)) ||
-			komix < ceil(({{ $stocks[0]->komix }} / 2))
+			paracetamol < ceil(({{ $paracetamol[0]->forecast }} / 2)) ||
+			neuralgin < ceil(({{ $neuralgin[0]->forecast }} / 2)) ||
+			antalgin < ceil(({{ $antalgin[0]->forecast }} / 2)) ||
+			bodrex < ceil(({{ $bodrex[0]->forecast }} / 2)) ||
+			komix < ceil(({{ $komix[0]->forecast }} / 2))
 			){
 			swal("", "Cannot submit order", "error");
 		} else{

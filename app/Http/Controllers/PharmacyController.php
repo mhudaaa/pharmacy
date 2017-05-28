@@ -209,15 +209,15 @@ class PharmacyController extends Controller{
 
     // Input restock
     public function setRestock(Request $request, $id_medicine){
-        $stocks         = Stock::where('id_player', '=', '1')->get();
+        $stocks         = Stock::first();
         $player         = Player::first();
 
         $stockArr       = [
-                            $stocks[0]->paracetamol,
-                            $stocks[0]->neuralgin,
-                            $stocks[0]->antalgin,
-                            $stocks[0]->bodrex,
-                            $stocks[0]->komix
+                            $stocks->paracetamol,
+                            $stocks->neuralgin,
+                            $stocks->antalgin,
+                            $stocks->bodrex,
+                            $stocks->komix
                             ];
 
         $oldStock       = $stockArr[$id_medicine - 1];

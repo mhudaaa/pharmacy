@@ -67,9 +67,7 @@
 		</div>
 
 		<div class="text-center content">
-			<a href="/orders">
-				<button class="btn bg-white glow-black">Orders</button>
-			</a>
+			<button onClick="viewOrders()" class="btn bg-white glow-black">Orders</button>
 		</div>
 
 
@@ -89,4 +87,5 @@
 		</div>
 
 	</div>
+@include('template/footer-home')
 @include('template/footer')

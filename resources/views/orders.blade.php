@@ -1,11 +1,11 @@
 @include('template/header')
 
 <?php
-	$getPar = floor(($paracetamol[($week-5)]->forecast ));
-	$getNeu = floor(($neuralgin[($week-5)]->forecast ));
-	$getAnt = floor(($antalgin[($week-5)]->forecast ));
-	$getBod = floor(($bodrex[($week-5)]->forecast ));
-	$getKom = floor(($komix[($week-5)]->forecast ));
+	$getPar = floor(($paracetamol[($week-5)]->forecast + rand(1, 10)) / 7);
+	$getNeu = floor(($neuralgin[($week-5)]->forecast + rand(1, 10)) / 7);
+	$getAnt = floor(($antalgin[($week-5)]->forecast + rand(1, 10)) / 7);
+	$getBod = floor(($bodrex[($week-5)]->forecast + rand(1, 10)) / 7);
+	$getKom = floor(($komix[($week-5)]->forecast + rand(1, 10)) / 7);
 ?>
 <body class="bg-blue">
 	<div id="wrapper" class="bg-blue order-wrap" canvas="container">

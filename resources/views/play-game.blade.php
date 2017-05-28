@@ -15,7 +15,7 @@
 		</div>
 		<div class="row text-center">
 			<div class="col-xs-6 col-xs-offset-3">
-				<div class="badge bg-green">John Smith</div>
+				<div class="badge bg-green">{{ Session::get('name') }}</div>
 				<div class="sm-divider"></div>
 				<div class="row">
 					<div class="col-xs-8 col-xs-offset-2">

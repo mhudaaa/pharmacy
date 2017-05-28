@@ -1,4 +1,10 @@
 @include('template/header')
+@if(Session::get('week') > 6) || {{ $player->money }} >= 1000)
+	<? 
+		header('Location: /congrats'); 
+		exit; 
+	?>
+@else
 <body class="bg-green">
 	<div id="wrapper">
 		<div class="header">
@@ -65,7 +71,6 @@
 				</table>
 			</div>
 		</div>
-
 		<div class="text-center content">
 			<button onClick="viewOrders()" class="btn bg-white glow-black">Orders</button>
 		</div>
@@ -80,7 +85,7 @@
 	      			</div>
 	    		</div>
 	    		<div class="row action">
-	        		<button onclick="location.href='/gameover'" class="btn btn-xs bg-green glow-green pull-right">Quit</button>
+	        		<button onClick="location.href='/gameover'" class="btn btn-xs bg-green glow-green pull-right">Quit</button>
 	        		<button type="submit" class="btn btn-xs bg-transparent pull-right" data-dismiss="modal">Cancel</button>
 	        	</div>
 	  		</div>
@@ -89,3 +94,4 @@
 	</div>
 @include('template/footer-home')
 @include('template/footer')
+@endif

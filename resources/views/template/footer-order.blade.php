@@ -4,11 +4,11 @@
 	var antalgin = 0;
 	var bodrex = 0;
 	var komix = 0;
-	var maxPar = {{ $paracetamol[0]->forecast + 7 }};
-	var maxNeu = {{ $neuralgin[0]->forecast + 7 }};
-	var maxAnt = {{ $antalgin[0]->forecast + 7 }};
-	var maxBod = {{ $bodrex[0]->forecast + 7 }};
-	var maxKom = {{ $komix[0]->forecast + 7 }};
+	var maxPar = {{ $paracetamol[($week-5)]->forecast + 7 }};
+	var maxNeu = {{ $neuralgin[($week-5)]->forecast + 7 }};
+	var maxAnt = {{ $antalgin[($week-5)]->forecast + 7 }};
+	var maxBod = {{ $bodrex[($week-5)]->forecast + 7 }};
+	var maxKom = {{ $komix[($week-5)]->forecast + 7 }};
 	var stockBod = {{ $stocks[0]->bodrex }};
 
 	function getPar(clicked_value){
@@ -41,7 +41,7 @@
 		antalgin = document.getElementById("antalgin").value;
 		bodrex = document.getElementById("bodrex").value;
 		komix = document.getElementById("komix").value;
-
+		
 		if(
 			paracetamol > {{ $stocks[0]->paracetamol }} ||
 			neuralgin > {{ $stocks[0]->neuralgin }} ||

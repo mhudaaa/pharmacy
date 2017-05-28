@@ -46,6 +46,7 @@ Route::post('/restock/set/{id_medicine}', 'PharmacyController@setRestock');
 
 Route::get('/checkout', 'PharmacyController@checkout');
 Route::get('/gameover', 'PharmacyController@gameover');
+Route::get('/congrats', 'PharmacyController@congrats');
 
 
 // Route::get('/orders', 'PharmacyController@start');

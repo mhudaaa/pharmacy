@@ -17,7 +17,6 @@
 		<div class="row text-center">
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="lg-divider"></div>
-				{{ Session::get('name') }}
 				<div id="myCarousel" class="carousel slide avatar" data-interval="false" data-ride="carousel">
 
 					<!-- Wrapper for slides -->
@@ -53,7 +52,7 @@
 	</div>
 
 	<div id="footer" class="text-center">
-		<a href="/spin"><button class="btn bg-white">Choose</button></a>
+		<a href="/play"><button class="btn bg-white">Choose</button></a>
 	</div>
 	
 

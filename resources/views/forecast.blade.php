@@ -53,11 +53,6 @@
 						</form>
 					</div>
 				</div>
-				{{ Session::get('forecastWeekPar') }},
-				{{ Session::get('forecastWeekNeu') }},
-				{{ Session::get('forecastWeekAnt') }},
-				{{ Session::get('forecastWeekBod') }},
-				{{ Session::get('forecastWeekKom') }}
 				<div class="card">
 					@if(Session::has('message'))
 						<div class="alert alert-danger">

@@ -15,7 +15,7 @@ function setup() {
 		timer2.html(counter);
 
 		if (counter == 0) {
-			// window.location.replace("/game-over");
+			window.location.replace("/gameover");
 		}
 	}
 

@@ -202,8 +202,7 @@ class PharmacyController extends Controller{
             
             return redirect('/forecast/'.$id_medicine);
         } else{
-            $request->session()->flash('message', "Gagal. Anda harus melakukan penjualan terlebih dahulu");
-            return redirect('/forecast/'.$id_medicine);
+            return redirect('/forecast/'.$id_medicine)->with('message', 'Forecast failed. Please do sales first');
         }
     }
 
@@ -229,26 +228,35 @@ class PharmacyController extends Controller{
         $price          = $request->price;
         $total          = $restockQty * $price;
 
-        
-        if ($id_medicine == 1) {
-            $stocks->paracetamol = $newStock;
-        } elseif ($id_medicine == 2) {
-            $stocks->neuralgin = $newStock;
-        } elseif ($id_medicine == 3) {
-            $stocks->antalgin = $newStock;
-        } elseif ($id_medicine == 4) {
-            $stocks->bodrex = $newStock;
+        if ($newStock <= 50) {
+            if ($id_medicine == 1) {
+                $stocks->paracetamol = $newStock;
+            } elseif ($id_medicine == 2) {
+                $stocks->neuralgin = $newStock;
+            } elseif ($id_medicine == 3) {
+                $stocks->antalgin = $newStock;
+            } elseif ($id_medicine == 4) {
+                $stocks->bodrex = $newStock;
+            } else{
+                $stocks->komix = $newStock;
+            }
+            // Increase money
+            $player->money = $playerMoney - $total;
+            
+            // Save Data
+            $stocks->save();
+            $player->save();
+            return redirect('/forecast/'.$id_medicine);
         } else{
-            $stocks->komix = $newStock;
+            return redirect('/forecast/'.$id_medicine)->with('message', "Restock failed. Cannot store more than 50 stocks");
         }
-
-        // Increase money
-        $player->money = $playerMoney - $total;
         
-        // Save Data
-        $stocks->save();
-        $player->save();
-        return redirect('/forecast/'.$id_medicine);
+
+    }
+
+    public function congrats(){
+        $player     = Player::first();
+        return view('congratulation', compact('player'));
     }
 
     public function gameover(){

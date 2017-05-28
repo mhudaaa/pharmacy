@@ -95,7 +95,44 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="row content text-center">
+			<button class="btn bg-white text-green" data-toggle="modal" data-target="#modal">Restock</button>
+		</div>
+		<div class="modal fade" id="modal">
+	        <form method="post" action="">
+		 		<div class="modal-dialog">
+		    		<div class="modal-content glow-black">
+		      			<div class="modal-body text-green">
+		        			<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+					        <h5 class="bold">Paracetamol</h5>
+					        <hr>
+				        	<div class="row">
+				        		<div class="col-xs-4 text-center">
+				        			<h6>Qty</h6>
+				        			<input type="number" min="0" max="50" id="restock_qty" name="restock_qty">
+				        		</div>
+				        		<div class="col-xs-4 text-center">
+				        			<h6>Price</h6>
+				        			<p>$5</p>
+				        		</div>
+				        		<div class="col-xs-4 text-center">
+				        			<h6>Total</h6>
+				        			<p class="bold montserrat">$<span id="total"></span></p>
+				        		</div>
+				        	</div>
+		      			</div>
+		    		</div>
+		    		<div class="row action">
+		        		<button class="btn btn-xs bg-green glow-green pull-right">Restock</button>
+		        		<button class="btn btn-xs bg-white pull-right" data-dismiss="modal">Cancel</button>
+		        	</div>
+		  		</div>
+	        </form>
+		</div>
 	</div>
+
 
 <!-- 
 

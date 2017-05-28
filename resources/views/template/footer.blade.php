@@ -26,6 +26,10 @@
 			$(".row-link").click(function() {
 		        window.location = $(this).data("href");
 		    });
+
+		    $('#restock_qty').keyup(function(){
+		       $('#total').text($('#restock_qty').val() * 5);
+		    });
 		});
 
   		// Back one page before

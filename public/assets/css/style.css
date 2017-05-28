@@ -495,13 +495,53 @@ table.restock-table h4{
 	width: 320px;
 	position: absolute;
 	left: 50%;
-	top: 40px;
+	top: 10px;
 	margin-left: -160px;
 	font-weight: 900;
 	font-size: 100px;
 	color: rgba(255,255,255,.15);
 	text-align: center;
 	font-family: 'Montserrat';
+	line-height: 70px;
+}
+
+.modal-dialog .modal-content {
+	margin-top: 40%;
+  	border-radius: 0;
+  	box-shadow: none;
+  	background-color: #fff;
+  	padding: 0px 5px;
+  	margin-left: 20px;
+  	margin-right: 20px;
+  	border:0;
+  	border-radius: 10px;
+  	box-shadow: 0 0 55px rgba(68, 237, 140, .4);
+}
+.modal-content hr{
+	border-top-color: #fafafa;
+	margin-bottom: 5px;
+}
+.modal-content input{
+	margin-top: 5px;
+	border: 1px solid rgba(68, 237, 140, .5);
+	border-radius: 5px;
+	padding: 5px 8px;
+}
+.modal-content p{
+	color: #ccc;
+	margin-top: 15px;
+}
+
+.modal-backdrop {
+	opacity: .8!important;
+  	background-color: rgba(255, 255, 255, 1)!important;
+}
+.modal-dialog .action{
+	margin-top: 15px;
+	margin-right: 20px;
+}
+.modal-dialog .btn{
+	margin-left: 5px;
 }
 
 [canvas=container],

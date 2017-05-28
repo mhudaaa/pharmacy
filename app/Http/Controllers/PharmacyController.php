@@ -35,12 +35,14 @@ class PharmacyController extends Controller{
     // Get order
     public function getOrders(){
         $week = session('week');
+        $stocks = Stock::where('id_player', '=', '1')->get();
+        $expired = Medicine::all();
         $paracetamol    = Forecast::where('id_medicine', '=', '1')->get();
         $neuralgin      = Forecast::where('id_medicine', '=', '2')->get();
         $antalgin       = Forecast::where('id_medicine', '=', '3')->get();
         $bodrex         = Forecast::where('id_medicine', '=', '4')->get();
         $komix          = Forecast::where('id_medicine', '=', '5')->get();
-        return view('orders', compact('week', 'paracetamol', 'antalgin', 'bodrex', 'neuralgin', 'komix'));
+        return view('orders', compact('expired', 'week', 'stocks', 'paracetamol', 'antalgin', 'bodrex', 'neuralgin', 'komix'));
     }
 
     // Set Order
@@ -89,7 +91,6 @@ class PharmacyController extends Controller{
             $request->session()->put('forecastWeek', $nextForecastWeek);
             
             return redirect('/forecast');
-            // echo "ini baru bisa";
         } else{
             echo "kurang";
         }

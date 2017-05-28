@@ -15,16 +15,21 @@ class PharmacyController extends Controller{
         $name = $request->name;
         $request->session()->put('name', $name);
         $request->session()->put('week', 5);
-        $request->session()->put('forecastWeek', 5);
+        $request->session()->put('forecastWeekPar', 5);
+        $request->session()->put('forecastWeekNeu', 5);
+        $request->session()->put('forecastWeekAnt', 5);
+        $request->session()->put('forecastWeekBod', 5);
+        $request->session()->put('forecastWeekKom', 5);
         return redirect('/avatar');
     }
 
 
 
     public function home(){
-        $stocks = Stock::where('id_player', '=', '1')->get();
-        $medicine = Medicine::all();
-        return view('homepage', compact('stocks', 'medicine'));
+        $stocks     = Stock::where('id_player', '=', '1')->get();
+        $medicine   = Medicine::all();
+        $player     = Player::first();
+        return view('homepage', compact('stocks', 'medicine', 'player'));
     }
 
     public function play(){
@@ -49,83 +54,222 @@ class PharmacyController extends Controller{
     public function setOrder(Request $request){
         $medicineQty = [$request->paracetamol, $request->neuralgin, $request->antalgin, $request->bodrex, $request->komix];
 
-        $i=0;
-        While ($i<= 4){
-            $order = new Order();
-            $order->id_player   = $request->id_player;
-            $order->week        = session('week');
-            $order->id_medicine = $i + 1;
-            $order->quantity    = $medicineQty[$i];
-            $order->save();
-            $i++;
+        // Initialize object
+        $outStock = false;
+        $stock  = Stock::first();
+        $player = Player::first();
+        $prices  = Medicine::all();
+
+        // Decrease stock
+        if ($stock->paracetamol >= $medicineQty[0]) {
+            $stock->paracetamol = ($stock->paracetamol - $medicineQty[0]);
+        } else{
+            $outStock = true;
+        }
+        
+        if($stock->neuralgin >= $medicineQty[1]){
+            $stock->neuralgin = ($stock->neuralgin - $medicineQty[1]);
+        } else{
+            $outStock = true;
         }
 
-        $nextWeek = session('week') + 1;
-        $request->session()->put('week', $nextWeek);
-        return redirect('/home');
+        if($stock->antalgin >= $medicineQty[2]){
+            $stock->antalgin = ($stock->antalgin - $medicineQty[2]);
+        } else{
+            $outStock = true;
+        }
+
+        if($stock->bodrex >= $medicineQty[3]){
+            $stock->bodrex = ($stock->bodrex - $medicineQty[3]);
+        } else{
+            $outStock = true;
+        }
+
+        if($stock->komix >= $medicineQty[4]){
+            $stock->komix = ($stock->komix - $medicineQty[4]);
+        } else{
+            $outStock = true;
+        }
+
+        if ($outStock == false) {
+            // $stock->save();
+
+            // // // Increase money
+            // $total =   (($medicineQty[0] * $prices[0]->price) +
+            //             ($medicineQty[1] * $prices[1]->price) +
+            //             ($medicineQty[2] * $prices[2]->price) +
+            //             ($medicineQty[3] * $prices[3]->price) +
+            //             ($medicineQty[4] * $prices[4]->price));
+            // $player->money = ($player->money + $total);
+            // $player->save();
+
+            // // Save medicine order
+            // $i=0;
+            // While ($i<= 4){
+            //     $order = new Order();
+            //     $order->id_player   = $request->id_player;
+            //     $order->week        = session('week');
+            //     $order->id_medicine = $i + 1;
+            //     $order->quantity    = $medicineQty[$i];
+            //     $order->save();
+            //     $i++;
+            // }
+
+            // // // Set week after 
+            // $nextWeek = session('week') + 1;
+            // $request->session()->put('week', $nextWeek);
+
+            // return redirect('/home');
+
+        } else{
+
+        }
     }
 
     // Get Forecast
-    public function getForecast(){
-        $forecasts  = Forecast::where('id_medicine', '=', '1')->get();
-        $orders     = Order::where('id_medicine', '=', '1')->get();
+    public function getForecast($id_medicine){
+        $player     = Player::all();
+        $forecasts  = Forecast::where('id_medicine', '=', $id_medicine)->get();
+        $orders     = Order::where('id_medicine', '=', $id_medicine)->get();
         $stock      = Stock::where('id_player', '=', '1')->get();
-        $medicine   = Medicine::where('id_medicine', '=', '1')->get();
-        return view('forecast', compact('forecasts', 'orders', 'stock', 'medicine'));
+        $idMedicine = $id_medicine;
+        if ($id_medicine == 1) {
+            $medicineStock = $stock[0]->paracetamol;
+        } elseif ($id_medicine == 2){
+            $medicineStock = $stock[0]->neuralgin;
+        } elseif ($id_medicine == 3){
+            $medicineStock = $stock[0]->antalgin;
+        } elseif ($id_medicine == 4){
+            $medicineStock = $stock[0]->bodrex;
+        } else{
+            $medicineStock = $stock[0]->komix;
+        }
+        $medicine   = Medicine::where('id_medicine', '=', $id_medicine)->get();
+        return view('forecast', compact('idMedicine', 'medicineStock', 'forecasts', 'orders', 'stock', 'medicine', 'player'));
     }
 
-    public function setForecast(Request $request){
+    public function setForecast(Request $request, $id_medicine){
         $lastWeek = $request->last_week;
-        $forecastWeek = session('forecastWeek');
-        if ($lastWeek == $forecastWeek) {
+        $forecastWeek = [
+            session('forecastWeekPar'),
+            session('forecastWeekNeu'),
+            session('forecastWeekAnt'),
+            session('forecastWeekBod'),
+            session('forecastWeekKom')
+        ];
+
+        if ($lastWeek == $forecastWeek[0] && $id_medicine == 1) {
             $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
 
             $forecast = new Forecast();
             $forecast->id_player    = 1;
-            $forecast->week         = $forecastWeek;
-            $forecast->id_medicine  = $request->id_medicine;
+            $forecast->week         = $forecastWeek[$id_medicine - 1];
+            $forecast->id_medicine  = $id_medicine;
             $forecast->forecast     = $getForecast;
             $forecast->save();
             
-            $nextForecastWeek = session('forecastWeek') + 1;
-            $request->session()->put('forecastWeek', $nextForecastWeek);
+            $nextForecastWeek = $forecastWeek[0] + 1;
+            $request->session()->put('forecastWeekPar', $nextForecastWeek);
             
-            return redirect('/forecast');
+            return redirect('/forecast/'.$id_medicine);
+        } elseif ($lastWeek == $forecastWeek[1] && $id_medicine == 2) {
+            $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
+
+            $forecast = new Forecast();
+            $forecast->id_player    = 1;
+            $forecast->week         = $forecastWeek[$id_medicine - 1];
+            $forecast->id_medicine  = $id_medicine;
+            $forecast->forecast     = $getForecast;
+            $forecast->save();
+            
+            $nextForecastWeek = $forecastWeek[1] + 1;
+            $request->session()->put('forecastWeekNeu', $nextForecastWeek);
+            
+            return redirect('/forecast/'.$id_medicine);
+        } elseif ($lastWeek == $forecastWeek[2] && $id_medicine == 3) {
+            $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
+
+            $forecast = new Forecast();
+            $forecast->id_player    = 1;
+            $forecast->week         = $forecastWeek[$id_medicine - 1];
+            $forecast->id_medicine  = $id_medicine;
+            $forecast->forecast     = $getForecast;
+            $forecast->save();
+            
+            $nextForecastWeek = $forecastWeek[2] + 1;
+            $request->session()->put('forecastWeekAnt', $nextForecastWeek);
+            
+            return redirect('/forecast/'.$id_medicine);
+        } elseif ($lastWeek == $forecastWeek[3] && $id_medicine == 4) {
+            $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
+
+            $forecast = new Forecast();
+            $forecast->id_player    = 1;
+            $forecast->week         = $forecastWeek[$id_medicine - 1];
+            $forecast->id_medicine  = $id_medicine;
+            $forecast->forecast     = $getForecast;
+            $forecast->save();
+            
+            $nextForecastWeek = $forecastWeek[3] + 1;
+            $request->session()->put('forecastWeekBod', $nextForecastWeek);
+            
+            return redirect('/forecast/'.$id_medicine);
+        } elseif ($lastWeek == $forecastWeek[4] && $id_medicine == 5) {
+            $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
+
+            $forecast = new Forecast();
+            $forecast->id_player    = 1;
+            $forecast->week         = $forecastWeek[$id_medicine - 1];
+            $forecast->id_medicine  = $id_medicine;
+            $forecast->forecast     = $getForecast;
+            $forecast->save();
+            
+            $nextForecastWeek = $forecastWeek[4] + 1;
+            $request->session()->put('forecastWeekKom', $nextForecastWeek);
+            
+            return redirect('/forecast/'.$id_medicine);
         } else{
-            echo "kurang";
+            $request->session()->flash('message', "Gagal. Anda harus melakukan penjualan terlebih dahulu");
+            return redirect('/forecast/'.$id_medicine);
         }
+    }
+
+    // Input restock
+    public function setRestock(Request $request, $id_medicine){
+        $oldStock       = $request->stock;
+        $restockQty     = $request->restock_qty;
+        $newStock       = $oldStock + $restockQty;
+
+        $playerMoney    = $request->money;
+        $price          = $request->price;
+        $total          = $restockQty * $price;
+
+        $stocks         = Stock::find($id_medicine);
+        
+        if ($id_medicine == 1) {
+            $stocks->paracetamol = $newStock;
+        } elseif ($id_medicine == 2) {
+            $stocks->neuralgin = $newStock;
+        } elseif ($id_medicine == 3) {
+            $stocks->antalgin = $newStock;
+        } elseif ($id_medicine == 4) {
+            $stocks->bodrex = $newStock;
+        } else{
+            $stocks->komix = $newStock;
+
+        }
+
+        // Increase money
+        $player->money = $playerMoney - $total;
+        
+        // Save Data
+        $stocks->save();
+        $player->save();
+        return redirect('/forecast');
     }
 
     public function gameover(){
         return view('game-over');
     }
-    
-    // public function start(){
-    //     $metodeAwal = rand(1, 3);
-
-    //     $paracetamol    = Permintaan::where('id_medicine', '=', '1')->get();
-    //     $antalgin       = Permintaan::where('id_medicine', '=', '2')->get();
-    //     $bodrex         = Permintaan::where('id_medicine', '=', '3')->get();
-    //     $diapet         = Permintaan::where('id_medicine', '=', '4')->get();
-    //     $komix          = Permintaan::where('id_medicine', '=', '5')->get();
-        
-    //     return view('orders', compact('metodeAwal', 'paracetamol', 'antalgin', 'bodrex', 'diapet', 'komix'));
-    // }
-    
-    // public function insert(Request $request){
-
-    //     $jmlObat = [$request->pr, $request->ag, $request->bd, $request->dp, $request->kx];
-
-
-    //     $i=0;
-    //     While ($i<= 4){
-    //         $permintaan = new Permintaan();
-    //         $permintaan->id_medicine = $i+1;
-    //         $permintaan->jumlah = $jmlObat[$i];
-    //         $permintaan->save();
-    //         $i++;
-    //     }
-    //     return redirect('/play');
-    // }
 
 }

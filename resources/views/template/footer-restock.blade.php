@@ -27,6 +27,9 @@
 		        window.location = $(this).data("href");
 		    });
 
+ 			$('#restock_qty').keyup(function(){
+		       $('#total').text($('#restock_qty').val() * {{ $medicine[0]->price }});
+		    });
 		});
 
   		// Back one page before
@@ -34,25 +37,6 @@
 		    window.history.back();
 		}
 
-
-		// FadeOut Page Animation
-		// $('a.checkout-btn').click(function(e) {
-		// 	e.preventDefault();
-		// 	newLocation = this.href;
-		// 	$('body').fadeOut('fast', newpage);
-		// 	});
-		// 	function newpage() {
-		// 	window.location = newLocation;
-		// }
-
-  	</script>
-  	
-	<!-- Timer -->
-  	<script type="text/javascript">
-  		$( document ).ready(function() {
-	  		timer = new Countdown();
-			timer.init();
-		});
   	</script>
 </body>
 </html>

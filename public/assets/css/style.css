@@ -217,6 +217,9 @@ small{
 	-webkit-transition: background 0.3s ease;
 	-o-transition: background 0.3s ease;
 }
+.btn.bg-transparent:hover{
+	color: #fff;
+}
 .btn.bg-white.text-blue:hover{
 	color: #85C7F4!important
 }
@@ -271,6 +274,10 @@ small{
 .bg-blue{
 	background-color: #85C7F4!important;
 	color: #FFFFFF!important
+}
+.bg-transparent{
+	background-color: transparent;
+	color: #eee;
 }
 
 
@@ -515,7 +522,7 @@ table.restock-table h4{
   	margin-right: 20px;
   	border:0;
   	border-radius: 10px;
-  	box-shadow: 0 0 55px rgba(68, 237, 140, .4);
+  	box-shadow: 0 0 55px rgba(68, 237, 140, .6);
 }
 .modal-content hr{
 	border-top-color: #fafafa;
@@ -533,8 +540,8 @@ table.restock-table h4{
 }
 
 .modal-backdrop {
-	opacity: .8!important;
-  	background-color: rgba(255, 255, 255, 1)!important;
+	opacity: .6!important;
+  	background-color: #000!important;
 }
 .modal-dialog .action{
 	margin-top: 15px;
@@ -542,6 +549,12 @@ table.restock-table h4{
 }
 .modal-dialog .btn{
 	margin-left: 5px;
+}
+
+.modal-content.animated{
+	/*padding-top: 40%;*/
+	margin-left: 0px!important;
+  	margin-right: 0px!important;
 }
 
 [canvas=container],

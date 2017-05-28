@@ -35,13 +35,17 @@ Route::get('/home', 'PharmacyController@home');
 Route::get('/orders', 'PharmacyController@getOrders');
 Route::post('/orders/set', 'PharmacyController@setOrder');
 
+// Forecast
+Route::get('/forecast/{id_medicine}', 'PharmacyController@getForecast');
+Route::post('/forecast/set/{id_medicine}', 'PharmacyController@setForecast');
+
 // Restock
-Route::get('/forecast', 'PharmacyController@getForecast');
-Route::post('/forecast/set', 'PharmacyController@setForecast');
+// Route::get('/restock/{id_medicine}', 'PharmacyController@getRestock');
+Route::post('/restock/set/{id_medicine}', 'PharmacyController@setRestock');
 
 
 Route::get('/checkout', 'PharmacyController@checkout');
-Route::get('/game-over', 'PharmacyController@gameover');
+Route::get('/gameover', 'PharmacyController@gameover');
 
 
 // Route::get('/orders', 'PharmacyController@start');

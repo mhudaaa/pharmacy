@@ -7,8 +7,11 @@
 					<div class="col-xs-3">
 						<a href="/home"><img class="icon icon-left" src="{{ URL::asset('assets/img/icon-back.png') }}"></a>
 					</div>
-					<div class="col-xs-8 text-left title">
-						Restock Medicine
+					<div class="col-xs-6 text-center title">
+						Restock
+					</div>
+					<div class="col-xs-3 text-right title">
+						${{ $player[0]->money }}
 					</div>
 				</div>
 			</div>
@@ -18,15 +21,15 @@
 		<!-- Medicine Photo -->
 		<div class="row content text-center">
 			<div class="col-xs-10 col-xs-offset-1">
-				<img src="{{ URL::asset('assets/img/c-paracetamol@2x.png') }}">
+				<img src="../assets/img/c-{{ $medicine[0]->medicine }}@2x.png">
 			</div>
 		</div>
 
 		<!-- Medicine Info -->
 		<div class="row content restock text-center">
 			<div class="col-xs-10 col-xs-offset-1">
-				<h4 class="text-uppercase montserrat bolder soft">Paracetamol</h4>
-				<h5 class="montserrat medium soft">{{ $stock[0]->paracetamol }}<span class="separator">|</span> ${{ $medicine[0]->price }}</h5>
+				<h4 class="text-uppercase montserrat bolder soft">{{ $medicine[0]->medicine }}</h4>
+				<h5 class="montserrat medium soft">{{ $medicineStock }}<span class="separator">|</span> ${{ $medicine[0]->price }}</h5>
 			</div>
 		</div>
 
@@ -35,13 +38,13 @@
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="row">
 					<div class="col-xs-7">
-						<h6>Weekly Forecast - {{ Session::get('forecastWeek') }}</h6>
+						<h6>Weekly Forecast</h6>
 					</div>
 					<div class="col-xs-5">
 						<? $qty = count($orders); $i = 0; ?>
-						<form method="post" action="/forecast/set">
+						<form method="post" action="/forecast/set/{{ $idMedicine }}">
 							{{ csrf_field() }}
-							<input type="hidden" name="id_medicine" value="1">
+							<input type="hidden" name="id_medicine" value="{{ $idMedicine }}">
 							<input type="hidden" name="last_week" value="{{ $orders[$qty-1]->week }}">
 							<input type="hidden" name="mg1" value="{{ $orders[$qty-2]->quantity }}">
 							<input type="hidden" name="mg2" value="{{ $orders[$qty-3]->quantity }}">
@@ -50,8 +53,18 @@
 						</form>
 					</div>
 				</div>
-
+				{{ Session::get('forecastWeekPar') }},
+				{{ Session::get('forecastWeekNeu') }},
+				{{ Session::get('forecastWeekAnt') }},
+				{{ Session::get('forecastWeekBod') }},
+				{{ Session::get('forecastWeekKom') }}
 				<div class="card">
+					@if(Session::has('message'))
+						<div class="alert alert-danger">
+							<button type="button" aria-hidden="true" data-dismiss="alert" aria-label="close" class="close">×</button>
+							<small>{{ Session::get('message') }}</small>
+						</div>
+					@endif
 					<div class="row">
 						<div class="col-xs-7">
 							<table class="restock-table">
@@ -101,11 +114,11 @@
 			<button class="btn bg-white text-green" data-toggle="modal" data-target="#modal">Restock</button>
 		</div>
 		<div class="modal fade" id="modal">
-	        <form method="post" action="">
+	        <form method="post" action="/restock/set/1">
+	        	{{ csrf_field() }}
 		 		<div class="modal-dialog">
 		    		<div class="modal-content glow-black">
 		      			<div class="modal-body text-green">
-		        			<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 					        <h5 class="bold">Paracetamol</h5>
 					        <hr>
 				        	<div class="row">
@@ -115,24 +128,26 @@
 				        		</div>
 				        		<div class="col-xs-4 text-center">
 				        			<h6>Price</h6>
-				        			<p>$5</p>
+				        			<p>${{ $medicine[0]->price }}</p>
 				        		</div>
 				        		<div class="col-xs-4 text-center">
 				        			<h6>Total</h6>
 				        			<p class="bold montserrat">$<span id="total"></span></p>
+				        			<input type="hidden" name="stock" value="{{ $stock[0]->paracetamol }}">
+				        			<input type="hidden" name="price" value="{{ $medicine[0]->price }}">
+				        			<input type="hidden" name="money" value="{{ $player[0]->money }}">
 				        		</div>
 				        	</div>
 		      			</div>
 		    		</div>
 		    		<div class="row action">
-		        		<button class="btn btn-xs bg-green glow-green pull-right">Restock</button>
-		        		<button class="btn btn-xs bg-white pull-right" data-dismiss="modal">Cancel</button>
+		        		<button type="submit" class="btn btn-xs bg-green glow-green pull-right">Restock</button>
+		        		<button class="btn btn-xs bg-transparent pull-right" data-dismiss="modal">Cancel</button>
 		        	</div>
 		  		</div>
 	        </form>
 		</div>
 	</div>
-
 
 <!-- 
 
@@ -145,4 +160,4 @@ foreach($arr as $key=>$value) {
 }     
 
 -->
-@include('template/footer')
+@include('template/footer-restock')

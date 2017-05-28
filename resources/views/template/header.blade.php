@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/animate.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/slidebar.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/sweetalert.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/fonts/Flaticon.css') }}">
 	<script type="text/javascript">
   		window.onscroll = function () {

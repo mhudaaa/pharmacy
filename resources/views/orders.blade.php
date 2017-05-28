@@ -147,10 +147,10 @@
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="card card-lg glow-black text-blue">
 					<h4 id="timer-2" class="text-center">-</h4>
-					<form method="post" type="submit" action="/orders/set">
+					<form method="post" type="submit" id="orderForm" action="/orders/set">
 						{{ csrf_field() }}
 						<input type="hidden" name="id_player" value="1">
-						<input type="hidden" name="week" value="6">
+						<!-- <input type="hidden" name="week" value="6"> -->
 						<table class="checkout"> 
 							<tr>
 								<td>
@@ -211,9 +211,10 @@
 						</table>
 
 						<div class="text-center">
-							<button type="submit" class="btn bg-blue glow-blue">Sell</button>
+							<!-- <button type="submit" class="btn bg-blue glow-blue">Sell</button> -->
 						</div>
 					</form>
+					<button onClick="sell()" class="btn bg-blue glow-blue">Sell</button>
 				</div>
 			</div>
 		</div>

@@ -114,7 +114,7 @@
 			<button class="btn bg-white text-green" data-toggle="modal" data-target="#modal">Restock</button>
 		</div>
 		<div class="modal fade" id="modal">
-	        <form method="post" action="/restock/set/1">
+	        <form method="post" action="/restock/set/{{ $idMedicine }}">
 	        	{{ csrf_field() }}
 		 		<div class="modal-dialog">
 		    		<div class="modal-content glow-black">
@@ -133,7 +133,7 @@
 				        		<div class="col-xs-4 text-center">
 				        			<h6>Total</h6>
 				        			<p class="bold montserrat">$<span id="total"></span></p>
-				        			<input type="hidden" name="stock" value="{{ $stock[0]->paracetamol }}">
+				        			
 				        			<input type="hidden" name="price" value="{{ $medicine[0]->price }}">
 				        			<input type="hidden" name="money" value="{{ $player[0]->money }}">
 				        		</div>

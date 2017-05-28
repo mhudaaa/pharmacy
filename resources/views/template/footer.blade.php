@@ -5,6 +5,7 @@
     <script src="{{ URL::asset('assets/js/script.js') }}"></script>
     <script src="{{ URL::asset('assets/js/countdown.js') }}"></script>
 	<script src="{{ URL::asset('assets/js/wow.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/p5/p5.js') }}"></script>
     <script src="{{ URL::asset('assets/js/p5/p5.dom.js') }}"></script>
     <script src="{{ URL::asset('assets/js/p5/p5.sound.js') }}"></script>

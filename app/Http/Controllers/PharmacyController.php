@@ -40,8 +40,8 @@ class PharmacyController extends Controller{
     // Get order
     public function getOrders(){
         $week = session('week');
-        $stocks = Stock::where('id_player', '=', '1')->get();
-        $expired = Medicine::all();
+        $stocks         = Stock::where('id_player', '=', '1')->get();
+        $expired        = Medicine::all();
         $paracetamol    = Forecast::where('id_medicine', '=', '1')->get();
         $neuralgin      = Forecast::where('id_medicine', '=', '2')->get();
         $antalgin       = Forecast::where('id_medicine', '=', '3')->get();
@@ -52,6 +52,7 @@ class PharmacyController extends Controller{
 
     // Set Order
     public function setOrder(Request $request){
+
         $medicineQty = [$request->paracetamol, $request->neuralgin, $request->antalgin, $request->bodrex, $request->komix];
 
         // Initialize object
@@ -61,69 +62,41 @@ class PharmacyController extends Controller{
         $prices  = Medicine::all();
 
         // Decrease stock
-        if ($stock->paracetamol >= $medicineQty[0]) {
-            $stock->paracetamol = ($stock->paracetamol - $medicineQty[0]);
-        } else{
-            $outStock = true;
+        $stock->paracetamol = ($stock->paracetamol - $medicineQty[0]);
+        $stock->neuralgin = ($stock->neuralgin - $medicineQty[1]);
+        $stock->antalgin = ($stock->antalgin - $medicineQty[2]);
+        $stock->bodrex = ($stock->bodrex - $medicineQty[3]);
+        $stock->komix = ($stock->komix - $medicineQty[4]);
+
+        // Save stock
+        $stock->save();
+
+        // // Increase money
+        $total =   (($medicineQty[0] * $prices[0]->price) +
+                    ($medicineQty[1] * $prices[1]->price) +
+                    ($medicineQty[2] * $prices[2]->price) +
+                    ($medicineQty[3] * $prices[3]->price) +
+                    ($medicineQty[4] * $prices[4]->price));
+        $player->money = ($player->money + $total);
+        $player->save();
+
+        // Save medicine order
+        $i=0;
+        While ($i<= 4){
+            $order = new Order();
+            $order->id_player   = $request->id_player;
+            $order->week        = session('week');
+            $order->id_medicine = $i + 1;
+            $order->quantity    = $medicineQty[$i];
+            $order->save();
+            $i++;
         }
-        
-        if($stock->neuralgin >= $medicineQty[1]){
-            $stock->neuralgin = ($stock->neuralgin - $medicineQty[1]);
-        } else{
-            $outStock = true;
-        }
 
-        if($stock->antalgin >= $medicineQty[2]){
-            $stock->antalgin = ($stock->antalgin - $medicineQty[2]);
-        } else{
-            $outStock = true;
-        }
+        // // Set week after 
+        $nextWeek = session('week') + 1;
+        $request->session()->put('week', $nextWeek);
 
-        if($stock->bodrex >= $medicineQty[3]){
-            $stock->bodrex = ($stock->bodrex - $medicineQty[3]);
-        } else{
-            $outStock = true;
-        }
-
-        if($stock->komix >= $medicineQty[4]){
-            $stock->komix = ($stock->komix - $medicineQty[4]);
-        } else{
-            $outStock = true;
-        }
-
-        if ($outStock == false) {
-            // $stock->save();
-
-            // // // Increase money
-            // $total =   (($medicineQty[0] * $prices[0]->price) +
-            //             ($medicineQty[1] * $prices[1]->price) +
-            //             ($medicineQty[2] * $prices[2]->price) +
-            //             ($medicineQty[3] * $prices[3]->price) +
-            //             ($medicineQty[4] * $prices[4]->price));
-            // $player->money = ($player->money + $total);
-            // $player->save();
-
-            // // Save medicine order
-            // $i=0;
-            // While ($i<= 4){
-            //     $order = new Order();
-            //     $order->id_player   = $request->id_player;
-            //     $order->week        = session('week');
-            //     $order->id_medicine = $i + 1;
-            //     $order->quantity    = $medicineQty[$i];
-            //     $order->save();
-            //     $i++;
-            // }
-
-            // // // Set week after 
-            // $nextWeek = session('week') + 1;
-            // $request->session()->put('week', $nextWeek);
-
-            // return redirect('/home');
-
-        } else{
-
-        }
+        return redirect('/home');
     }
 
     // Get Forecast
@@ -236,7 +209,19 @@ class PharmacyController extends Controller{
 
     // Input restock
     public function setRestock(Request $request, $id_medicine){
-        $oldStock       = $request->stock;
+        $stocks         = Stock::where('id_player', '=', '1')->get();
+        $player         = Player::first();
+
+        $stockArr       = [
+                            $stocks[0]->paracetamol,
+                            $stocks[0]->neuralgin,
+                            $stocks[0]->antalgin,
+                            $stocks[0]->bodrex,
+                            $stocks[0]->komix
+                            ];
+
+        $oldStock       = $stockArr[$id_medicine - 1];
+
         $restockQty     = $request->restock_qty;
         $newStock       = $oldStock + $restockQty;
 
@@ -244,7 +229,6 @@ class PharmacyController extends Controller{
         $price          = $request->price;
         $total          = $restockQty * $price;
 
-        $stocks         = Stock::find($id_medicine);
         
         if ($id_medicine == 1) {
             $stocks->paracetamol = $newStock;
@@ -256,7 +240,6 @@ class PharmacyController extends Controller{
             $stocks->bodrex = $newStock;
         } else{
             $stocks->komix = $newStock;
-
         }
 
         // Increase money
@@ -265,7 +248,7 @@ class PharmacyController extends Controller{
         // Save Data
         $stocks->save();
         $player->save();
-        return redirect('/forecast');
+        return redirect('/forecast/'.$id_medicine);
     }
 
     public function gameover(){

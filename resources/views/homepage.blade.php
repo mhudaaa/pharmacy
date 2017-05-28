@@ -38,31 +38,31 @@
 					<tr class='row-link' data-href='/forecast'>
 						<td><img src="{{ URL::asset('assets/img/paracetamol.png') }}"></td>
 						<td>Paracetamol</td>
-						<td><h4>$5</h4></td>
+						<td><h4>${{ $medicine[0]->price }}</h4></td>
 						<td><div class="stock">{{ $stocks[0]->paracetamol }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/neuralgin.png') }}"></td>
 						<td>Neuralgin</td>
-						<td><h4>$3</h4></td>
+						<td><h4>${{ $medicine[1]->price }}</h4></td>
 						<td><div class="stock">{{ $stocks[0]->neuralgin }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/antalgin.png') }}"></td>
 						<td>Antalgin</td>
-						<td><h4>$11</h4></td>
+						<td><h4>${{ $medicine[2]->price }}</h4></td>
 						<td><div class="stock">{{ $stocks[0]->antalgin }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/bodrex.png') }}"></td>
 						<td>Bodrex</td>
-						<td><h4>$8</h4></td>
+						<td><h4>${{ $medicine[3]->price }}</h4></td>
 						<td><div class="stock">{{ $stocks[0]->bodrex }}</div></td>
 					</tr>
 					<tr>
 						<td><img src="{{ URL::asset('assets/img/Komix.png') }}"></td>
 						<td>Komix</td>
-						<td><h4>$7</h4></td>
+						<td><h4>${{ $medicine[4]->price }}</h4></td>
 						<td><div class="stock">{{ $stocks[0]->komix }}</div></td>
 					</tr>
 				</table>

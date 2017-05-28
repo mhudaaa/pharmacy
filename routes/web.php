@@ -32,11 +32,12 @@ Route::get('/play', 'PharmacyController@play');
 Route::get('/home', 'PharmacyController@home');
 
 // Order
-Route::get('/orders', 'PharmacyController@orders');
+Route::get('/orders', 'PharmacyController@getOrders');
 Route::post('/orders/set', 'PharmacyController@setOrder');
 
 // Restock
-Route::get('/forecast', 'PharmacyController@forecast');
+Route::get('/forecast', 'PharmacyController@getForecast');
+Route::post('/forecast/set', 'PharmacyController@setForecast');
 
 
 Route::get('/checkout', 'PharmacyController@checkout');

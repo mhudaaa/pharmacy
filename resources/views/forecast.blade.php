@@ -26,7 +26,7 @@
 		<div class="row content restock text-center">
 			<div class="col-xs-10 col-xs-offset-1">
 				<h4 class="text-uppercase montserrat bolder soft">Paracetamol</h4>
-				<h5 class="montserrat medium soft">37 <span class="separator">|</span> $5</h5>
+				<h5 class="montserrat medium soft">{{ $stock[0]->paracetamol }}<span class="separator">|</span> ${{ $medicine[0]->price }}</h5>
 			</div>
 		</div>
 
@@ -35,12 +35,19 @@
 			<div class="col-xs-10 col-xs-offset-1">
 				<div class="row">
 					<div class="col-xs-7">
-						<h6>Weekly Forecast</h6>
+						<h6>Weekly Forecast - {{ Session::get('forecastWeek') }}</h6>
 					</div>
 					<div class="col-xs-5">
-						<a href="">
-							<button class="btn btn-xs bg-white text-green glow-black pull-right">Forecast</button>
-						</a>
+						<? $qty = count($orders); $i = 0; ?>
+						<form method="post" action="/forecast/set">
+							{{ csrf_field() }}
+							<input type="hidden" name="id_medicine" value="1">
+							<input type="hidden" name="last_week" value="{{ $orders[$qty-1]->week }}">
+							<input type="hidden" name="mg1" value="{{ $orders[$qty-2]->quantity }}">
+							<input type="hidden" name="mg2" value="{{ $orders[$qty-3]->quantity }}">
+							<input type="hidden" name="mg3" value="{{ $orders[$qty-4]->quantity }}">
+							<button type="submit" class="btn btn-xs bg-white text-green glow-black pull-right">Get</button>
+						</form>
 					</div>
 				</div>
 
@@ -86,18 +93,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-
-		<div class="row content text-center">
-			<? $qty = count($orders); $i = 0; ?>
-			<div class="card text-green">
-				<form method="post" action="/forecast/set">
-					<input type="number" name="mg1" value="{{ $orders[$qty-1]->quantity }}">
-					<input type="number" name="mg2" value="{{ $orders[$qty-2]->quantity }}">
-					<input type="number" name="mg3" value="{{ $orders[$qty-3]->quantity }}">
-					<button type="submit" class="btn bg-white text-green">Forecast</button>
-				</form>
 			</div>
 		</div>
 	</div>

@@ -15,14 +15,16 @@ class PharmacyController extends Controller{
         $name = $request->name;
         $request->session()->put('name', $name);
         $request->session()->put('week', 5);
+        $request->session()->put('forecastWeek', 5);
         return redirect('/avatar');
     }
 
 
 
     public function home(){
-        $stocks = Stock::all();
-        return view('homepage', compact('stocks'));
+        $stocks = Stock::where('id_player', '=', '1')->get();
+        $medicine = Medicine::all();
+        return view('homepage', compact('stocks', 'medicine'));
     }
 
     public function play(){
@@ -31,7 +33,7 @@ class PharmacyController extends Controller{
 
 
     // Get order
-    public function orders(){
+    public function getOrders(){
         $week = session('week');
         $paracetamol    = Forecast::where('id_medicine', '=', '1')->get();
         $neuralgin      = Forecast::where('id_medicine', '=', '2')->get();
@@ -56,22 +58,41 @@ class PharmacyController extends Controller{
             $i++;
         }
 
+        $nextWeek = session('week') + 1;
+        $request->session()->put('week', $nextWeek);
         return redirect('/home');
     }
 
     // Get Forecast
-    public function forecast(){
+    public function getForecast(){
         $forecasts  = Forecast::where('id_medicine', '=', '1')->get();
         $orders     = Order::where('id_medicine', '=', '1')->get();
-        return view('forecast', compact('forecasts', 'orders', 'jmlMinggu'));
+        $stock      = Stock::where('id_player', '=', '1')->get();
+        $medicine   = Medicine::where('id_medicine', '=', '1')->get();
+        return view('forecast', compact('forecasts', 'orders', 'stock', 'medicine'));
     }
 
-    public function getForeach(Request $request){
+    public function setForecast(Request $request){
+        $lastWeek = $request->last_week;
+        $forecastWeek = session('forecastWeek');
+        if ($lastWeek == $forecastWeek) {
+            $getForecast = ceil((($request->mg1 * 3) + ($request->mg2 * 2) + ($request->mg3 * 1)) / 6);
 
-    }
-
-    public function setForecast(){
-
+            $forecast = new Forecast();
+            $forecast->id_player    = 1;
+            $forecast->week         = $forecastWeek;
+            $forecast->id_medicine  = $request->id_medicine;
+            $forecast->forecast     = $getForecast;
+            $forecast->save();
+            
+            $nextForecastWeek = session('forecastWeek') + 1;
+            $request->session()->put('forecastWeek', $nextForecastWeek);
+            
+            return redirect('/forecast');
+            // echo "ini baru bisa";
+        } else{
+            echo "kurang";
+        }
     }
 
     public function gameover(){

@@ -127,8 +127,8 @@ small{
 }
 
 .medicine-stock td:first-child{
-	text-align: center;
-	width: 90px;
+	text-align: left;
+	width: 80px;
 }
 .medicine-stock td{
 	padding-bottom: 20px;
